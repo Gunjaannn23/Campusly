@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sign in to Campusly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F1FF;--surface:#fff;--ink:#1B1138;--muted:#5E5780;--purple:#6D28D9;--deep:#2A1568;--pop:#FF5C7A;--line:#DDD6F5;--ok:#0F7B4B;--err:#C0183A;--on:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#150C2E;--surface:#20143F;--ink:#F1EDFF;--muted:#B3A9D8;--purple:#A78BFA;--deep:#0E0720;--pop:#FF7C93;--line:#3A2A6B;--ok:#4ADE9B;--err:#FF8DA3;--on:#150C2E}}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font:400 16px/1.55 "DM Sans",system-ui,sans-serif;display:grid;place-items:center;padding:20px}
+h1{font-family:"Bricolage Grotesque","DM Sans",system-ui,sans-serif;letter-spacing:-.02em;line-height:1.1;margin:0 0 6px;font-size:30px}
+.box{width:100%;max-width:430px}
+.brand{display:flex;align-items:center;gap:10px;font:800 26px "Bricolage Grotesque",sans-serif;margin-bottom:22px}
+.card{background:var(--surface);border:2px solid var(--line);border-radius:26px;padding:28px 24px}
+.sub{color:var(--muted);margin:0 0 20px}
+.tabs{display:flex;background:var(--bg);border-radius:999px;padding:4px;margin-bottom:20px}
+.tabs button{flex:1;border:0;background:transparent;color:var(--ink);padding:9px;border-radius:999px;font:700 15px "DM Sans",sans-serif;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--deep);color:#fff}
+label{display:block;font-weight:700;font-size:14px;margin:14px 0 6px}
+input{width:100%;padding:13px 16px;border-radius:14px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:inherit}
+input:focus{outline:3px solid var(--pop);outline-offset:1px;border-color:var(--purple)}
+.btn{width:100%;margin-top:20px;background:var(--purple);color:var(--on);border:0;border-radius:999px;padding:14px;font:700 16px "DM Sans",sans-serif;cursor:pointer}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn:focus-visible,.link:focus-visible,.tabs button:focus-visible{outline:3px solid var(--pop);outline-offset:3px}
+.link{background:none;border:0;color:var(--purple);font:700 14px "DM Sans",sans-serif;cursor:pointer;padding:6px 0;margin-top:10px;margin-right:14px;text-decoration:underline}
+.link:disabled{opacity:.5;cursor:default;text-decoration:none}
+.msg{min-height:24px;margin-top:12px;font-size:14px;font-weight:500}
+.msg.err{color:var(--err)}.msg.ok{color:var(--ok)}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.setup{background:var(--surface);border:2px solid var(--pop);border-radius:14px;padding:12px 16px;margin-bottom:16px;font-size:14px}
+.hide{display:none}
+.feed{display:grid;gap:10px;margin:16px 0 0;padding:0;list-style:none}
+.feed li{border:2px solid var(--line);border-radius:14px;padding:12px 14px}
+.feed b{display:block}
+</style>
+</head>
+<body>
+<main class="box">
+  <div class="brand">
+    <svg width="38" height="38" viewBox="0 0 48 48" aria-hidden="true"><path d="M38 12A18 18 0 1 0 38 36" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><path d="M26 15l9 9-9 9-9-9z" fill="var(--purple)"/></svg>
+    Campusly
+  </div>
+
+  
+  <section class="card" id="s-auth">
+    <h1 id="t-auth">Welcome back</h1>
+    <p class="sub">Verify your email to enter.</p>
+    <div class="tabs" role="tablist">
+      <button type="button" role="tab" id="tab-in" aria-selected="true">Sign in</button>
+      <button type="button" role="tab" id="tab-up" aria-selected="false">Create account</button>
+    </div>
+    <form id="f-auth" novalidate>
+      <div id="name-wrap" class="hide">
+        <label for="name">Full name</label>
+        <input id="name" autocomplete="name" placeholder="Your full name">
+      </div>
+      <label for="email">Email</label>
+      <input id="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com">
+      <div class="hint">College or personal email both work. We’ll email you a code from Campusly.</div>
+      <button class="btn" type="submit" id="go">Send verification code</button>
+      <div class="msg" id="m-auth" role="status"></div>
+    </form>
+  </section>
+
+  <section class="card hide" id="s-code">
+    <h1>Check your inbox</h1>
+    <p class="sub" id="code-sub"></p>
+    <form id="f-code" novalidate>
+      <label for="code">Verification code</label>
+      <input id="code" inputmode="numeric" maxlength="10" autocomplete="one-time-code" placeholder="Enter the code">
+      <button class="btn" type="submit" id="verify">Verify and enter</button>
+      <div class="msg" id="m-code" role="status"></div>
+    </form>
+    <button class="link" id="resend" type="button">Send a new code</button>
+    <button class="link" id="back" type="button">Use a different email</button>
+  </section>
+
+  <section class="card hide" id="s-app">
+    <h1 id="hello">You’re in</h1>
+    <p class="sub" id="who"></p>
+    <ul class="feed">
+      <li><b>Engineering Maths II, ₹250</b>Hostel B</li>
+      <li><b>Roommate wanted, ₹7,500/mo</b>Near North gate</li>
+      <li><b>Hack night, Fri 7 pm</b>Coding club</li>
+    </ul>
+    <button class="btn" id="out" type="button">Sign out</button>
+  </section>
+</main>
+
+<script>
+function $(id){return document.getElementById(id)}
+function csrf(){var m=document.cookie.match(/(?:^|; )csrftoken=([^;]+)/);return m?decodeURIComponent(m[1]):""}
+async function api(path,opt){
+  opt=opt||{};var h={"X-CSRFToken":csrf()},body=opt.body;
+  if(body&&!(body instanceof FormData)){h["Content-Type"]="application/json";body=JSON.stringify(body)}
+  var j={},r;
+  try{r=await fetch("/api"+path,{method:opt.method||"GET",headers:h,body:body,credentials:"same-origin"})}
+  catch(e){return {ok:false,status:0,error:"Can’t reach the server. Is it running?"}}
+  try{j=await r.json()}catch(e){}
+  if(r.status===401&&!opt.noRedirect){location.replace("/login/")}
+  return {ok:r.ok&&j.ok!==false,status:r.status,data:j.data,error:j.error,user:j.user};
+}
+var mode="in",email="",name="",cool=null,HOME_PAGE="/home/";
+function show(id){["s-auth","s-code","s-app"].forEach(function(s){$(s).classList.toggle("hide",s!==id)})}
+function say(id,t,c){var m=$(id);m.textContent=t;m.className="msg "+(c||"")}
+function setMode(m){
+  mode=m;
+  $("tab-in").setAttribute("aria-selected",m==="in");
+  $("tab-up").setAttribute("aria-selected",m==="up");
+  $("name-wrap").classList.toggle("hide",m==="in");
+  $("t-auth").textContent=m==="in"?"Welcome back":"Join your campus";
+  say("m-auth","");
+}
+function startCooldown(){
+  var s=60,b=$("resend");b.disabled=true;
+  clearInterval(cool);
+  cool=setInterval(function(){s--;b.textContent=s>0?"Send a new code ("+s+"s)":"Send a new code";if(s<=0){clearInterval(cool);b.disabled=false}},1000);
+  b.textContent="Send a new code (60s)";
+}
+function sendCode(){return api("/auth/request-code/",{method:"POST",noRedirect:true,body:{email:email,mode:mode,name:name}})}
+$("tab-in").onclick=function(){setMode("in")};
+$("tab-up").onclick=function(){setMode("up")};
+
+$("f-auth").addEventListener("submit",async function(e){
+  e.preventDefault();
+  email=$("email").value.trim().toLowerCase();name=$("name").value.trim();
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){say("m-auth","Enter a valid email, like you@example.com.","err");return}
+  if(mode==="up"&&name.length<2){say("m-auth","Enter your full name.","err");return}
+  $("go").disabled=true;say("m-auth","Sending code…");
+  var r=await sendCode();
+  $("go").disabled=false;
+  if(!r.ok){say("m-auth",r.error||"Something went wrong. Try again.","err");return}
+  $("code-sub").textContent="We emailed a 6-digit code to "+email+". It expires in 10 minutes. Check Spam too.";
+  $("code").value="";say("m-code","");show("s-code");startCooldown();$("code").focus();
+});
+
+$("f-code").addEventListener("submit",async function(e){
+  e.preventDefault();
+  var token=$("code").value.trim();
+  if(token.length<6){say("m-code","Enter the full 6-digit code.","err");return}
+  $("verify").disabled=true;say("m-code","Checking…");
+  var r=await api("/auth/verify/",{method:"POST",noRedirect:true,body:{email:email,code:token}});
+  $("verify").disabled=false;
+  if(!r.ok){say("m-code",r.error||"Could not verify. Try again.","err");return}
+  location.replace(HOME_PAGE);
+});
+
+$("resend").onclick=async function(){
+  $("resend").disabled=true;say("m-code","Sending a new code…");
+  var r=await sendCode();
+  if(!r.ok){say("m-code",r.error||"Could not send.","err");$("resend").disabled=false;return}
+  say("m-code","New code sent. Check your inbox and Spam.","ok");startCooldown();
+};
+$("back").onclick=function(){clearInterval(cool);show("s-auth")};
+show("s-auth");
+</script>
+</body>
+</html>

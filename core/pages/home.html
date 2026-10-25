@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Campusly – Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F1FF;--surface:#fff;--ink:#1B1138;--muted:#5E5780;--purple:#6D28D9;--deep:#2A1568;--pop:#FF5C7A;--line:#DDD6F5;--on:#fff;--ok:#0F7B4B}
+@media (prefers-color-scheme:dark){:root{--bg:#150C2E;--surface:#20143F;--ink:#F1EDFF;--muted:#B3A9D8;--purple:#A78BFA;--deep:#0E0720;--pop:#FF7C93;--line:#3A2A6B;--on:#150C2E;--ok:#4ADE9B}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 "DM Sans",system-ui,sans-serif;padding-bottom:env(safe-area-inset-bottom,0px)}
+h1,h2,h3{font-family:"Bricolage Grotesque","DM Sans",system-ui,sans-serif;letter-spacing:-.02em;line-height:1.1;margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:0;z-index:5;background:var(--bg);padding-top:env(safe-area-inset-top,0px);border-bottom:2px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;padding:12px 0;gap:12px}
+.brand{display:flex;align-items:center;gap:8px;font:800 22px "Bricolage Grotesque",sans-serif}
+.me{display:flex;align-items:center;gap:10px}
+.av{width:36px;height:36px;border-radius:50%;background:var(--purple);color:var(--on);display:grid;place-items:center;font-weight:700}
+.btn{background:var(--purple);color:var(--on);border:0;border-radius:999px;padding:10px 20px;font:700 15px "DM Sans",sans-serif;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.btn:disabled{opacity:.6;cursor:wait}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--pop);outline-offset:2px}
+.hi{padding:24px 0 6px}.hi h1{font-size:clamp(28px,5vw,42px);font-weight:800}.hi p{color:var(--muted);margin:6px 0 0}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:18px 0 12px}
+.tab{border:2px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:8px 16px;font:700 14px "DM Sans",sans-serif;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--deep);border-color:var(--deep);color:#fff}
+.badge{background:var(--pop);color:#1B1138;border-radius:999px;padding:0 7px;margin-left:5px;font-size:12px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.tools input[type=search],.tools select{padding:10px 16px;border-radius:999px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:inherit}
+.tools input[type=search]{flex:1;min-width:170px}
+.chk{display:flex;gap:6px;align-items:center;font-size:14px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;padding-bottom:50px}
+.card{background:var(--surface);border:2px solid var(--line);border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:6px}
+.card.sold{opacity:.65}
+.thumb{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;background:var(--bg);display:block}
+.ph{display:grid;place-items:center;color:var(--muted);font-size:13px}
+.card h3{font-size:19px}.card p{margin:0;color:var(--muted);font-size:15px}
+.price{display:inline-block;align-self:flex-start;background:var(--purple);color:var(--on);border-radius:8px;padding:1px 10px;font-weight:700;font-size:14px}
+.tag{display:inline-block;border:2px solid var(--line);border-radius:8px;padding:0 8px;font-size:12px;font-weight:700;margin-left:6px}
+.tag.s{background:var(--pop);border-color:var(--pop);color:#1B1138}
+.meta{font-size:13px;color:var(--muted)}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
+.acts button,.sm{border:2px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:6px 14px;font:700 13px "DM Sans",sans-serif;cursor:pointer}
+.acts button.pri{background:var(--purple);border-color:var(--purple);color:var(--on)}
+.acts button[aria-pressed="true"]{background:var(--pop);border-color:var(--pop);color:#1B1138}
+.empty{grid-column:1/-1;border:2px dashed var(--line);border-radius:20px;padding:30px;text-align:center;color:var(--muted)}
+.post{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:20px;margin-bottom:18px}
+.post form{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:12px}
+.post label,dialog label{display:block;font-weight:700;font-size:14px;margin-bottom:4px}
+.post input,.post textarea,.post select,dialog textarea,.rep input{width:100%;padding:11px 14px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
+.full{grid-column:1/-1}.hide{display:none!important}
+dialog{border:2px solid var(--line);border-radius:24px;background:var(--surface);color:var(--ink);max-width:520px;width:calc(100% - 28px);padding:20px}
+dialog::backdrop{background:rgba(10,5,25,.6)}
+.msgs{display:grid;gap:10px;padding-bottom:50px;grid-column:1/-1}
+.m{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:12px 16px}
+.m.in{border-color:var(--purple)}
+.rep{display:flex;gap:8px;margin-top:8px}
+#setup{background:var(--surface);border:2px solid var(--pop);border-radius:14px;padding:12px 16px;margin:16px 0}
+#note{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--deep);color:#fff;border-radius:999px;padding:10px 20px;font-weight:700;font-size:14px;z-index:20;opacity:0;pointer-events:none;transition:opacity .3s}
+#note.on{opacity:1}
+</style>
+</head>
+<body>
+<header><div class="wrap bar">
+  <div class="brand"><svg width="32" height="32" viewBox="0 0 48 48" aria-hidden="true"><path d="M38 12A18 18 0 1 0 38 36" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><path d="M26 15l9 9-9 9-9-9z" fill="var(--purple)"/></svg>Campusly</div>
+  <div class="me"><div class="av" id="av" aria-hidden="true">?</div><button class="btn ghost" id="out" type="button">Sign out</button></div>
+</div></header>
+<main class="wrap">
+  <section class="hi"><h1 id="hello">Welcome</h1><p>Post what you have. Find what you need. Meet on campus.</p></section>
+  <div class="tabs" id="tabs" role="tablist"></div>
+  <div class="tools" id="tools">
+    <input type="search" id="q" placeholder="Search listings" aria-label="Search listings">
+    <select id="sort" aria-label="Sort"><option value="new">Newest</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option></select>
+    <label class="chk"><input type="checkbox" id="hs" checked> Hide sold</label>
+    <button class="btn" id="toggle" type="button" aria-expanded="false">Post a listing</button>
+  </div>
+  <section class="post hide" id="post">
+    <h2 style="font-size:22px" id="post-title">New listing</h2>
+    <form id="pf">
+      <div><label for="p-title">Title</label><input id="p-title" required maxlength="60"></div>
+      <div><label for="p-price">Price or pay</label><input id="p-price" maxlength="20" placeholder="₹250 or Free"></div>
+      <div id="cond-w"><label for="p-cond">Condition</label><select id="p-cond"><option>Like new</option><option>Good</option><option>Fair</option><option>New</option></select></div>
+      <div><label for="p-place" id="pl-l">Place or time</label><input id="p-place" maxlength="40"></div>
+      <div><label for="p-contact">How to reach you</label><input id="p-contact" maxlength="60" placeholder="Optional. Phone or Instagram"></div>
+      <div><label for="p-photo">Photo (optional)</label><input id="p-photo" type="file" accept="image/*"></div>
+      <div class="full"><label for="p-desc">Details</label><textarea id="p-desc" rows="2" maxlength="160"></textarea></div>
+      <div class="full"><button class="btn" type="submit" id="pub">Publish listing</button><div id="pm" role="status" style="margin-top:8px;font-size:14px"></div></div>
+    </form>
+  </section>
+  <div class="grid" id="grid" aria-live="polite"></div>
+</main>
+<dialog id="dlg"><div id="dbody"></div></dialog>
+<div id="note" role="status"></div>
+
+<script>
+var LOGIN_PAGE="/login/";
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function csrf(){var m=document.cookie.match(/(?:^|; )csrftoken=([^;]+)/);return m?decodeURIComponent(m[1]):""}
+async function api(path,opt){
+  opt=opt||{};var h={"X-CSRFToken":csrf()},body=opt.body;
+  if(body&&!(body instanceof FormData)){h["Content-Type"]="application/json";body=JSON.stringify(body)}
+  var j={},r;
+  try{r=await fetch("/api"+path,{method:opt.method||"GET",headers:h,body:body,credentials:"same-origin"})}
+  catch(e){return {ok:false,status:0,error:"Can’t reach the server. Is it running?"}}
+  try{j=await r.json()}catch(e){}
+  if(r.status===401&&!opt.noRedirect){location.replace("/login/")}
+  return {ok:r.ok&&j.ok!==false,status:r.status,data:j.data,error:j.error,user:j.user};
+}
+var sb=true;
+var CATS=["Marketplace","Rooms","Gigs","Events"];
+var HINT={Marketplace:["Pickup spot","Hostel B, library gate"],Rooms:["Area or distance","10 min from campus"],Gigs:["When","Evenings, weekends"],Events:["Date and time","Fri, 7 pm"]};
+var cat=CATS[0],view="browse",query="",sort="new",hideSold=true,uid="",uname="",rows=[],msgs=[],state="loading",saved={},seen=0;
+function load(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
+function store(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function ago(d){var m=Math.floor((Date.now()-new Date(d))/60000);if(m<1)return "just now";if(m<60)return m+" min ago";var h=Math.floor(m/60);if(h<24)return h+" h ago";return Math.floor(h/24)+" d ago"}
+function pnum(p){p=String(p||"");if(/free/i.test(p))return 0;var m=p.replace(/,/g,"").match(/\d+(\.\d+)?/);return m?parseFloat(m[0]):1e12}
+function safeUrl(u){return /^(https:\/\/|\/media\/)/.test(u||"")?u:""}
+function note(t){var n=$("note");n.textContent=t;n.classList.add("on");setTimeout(function(){n.classList.remove("on")},2600)}
+function unread(){return msgs.filter(function(m){return m.recipient_id===uid&&new Date(m.created_at).getTime()>seen}).length}
+
+async function loadListings(){
+  if(!sb)return;
+  var r=await api("/listings/");
+  if(!r.ok){state="error"}else{rows=r.data||[];state="ok"}
+  render();
+}
+async function loadMsgs(){
+  if(!sb)return;
+  var r=await api("/messages/");
+  if(r.ok){msgs=r.data||[];renderTabs();if(view==="inbox")render()}
+}
+function renderTabs(){
+  var t=$("tabs");t.innerHTML="";
+  CATS.forEach(function(c){var n=rows.filter(function(x){return x.category===c&&x.status!=="sold"}).length;
+    var b=document.createElement("button");b.type="button";b.className="tab";b.setAttribute("role","tab");b.setAttribute("aria-selected",view==="browse"&&c===cat);b.textContent=c+(state==="ok"?" ("+n+")":"");b.onclick=function(){view="browse";cat=c;render()};t.appendChild(b)});
+  var b=document.createElement("button");b.type="button";b.className="tab";b.setAttribute("aria-selected",view==="inbox");
+  var u=unread();b.innerHTML="Inbox"+(u?'<span class="badge">'+u+'</span>':"");
+  b.onclick=function(){view="inbox";seen=Date.now();store("cl_seen_"+uid,seen);render()};t.appendChild(b);
+}
+function render(){
+  renderTabs();
+  var inbox=view==="inbox";
+  $("tools").classList.toggle("hide",inbox);if(inbox)$("post").classList.add("hide");
+  $("cond-w").classList.toggle("hide",cat!=="Marketplace");
+  $("pl-l").textContent=HINT[cat][0];$("p-place").placeholder=HINT[cat][1];
+  $("post-title").textContent="New listing in "+cat;
+  var g=$("grid");
+  if(state==="loading"&&sb){g.innerHTML='<div class="empty">Loading…</div>';return}
+  if(state==="error"){g.innerHTML='<div class="empty">Couldn’t load listings. Refresh the page or sign in again.</div>';return}
+  g.innerHTML=inbox?inboxHtml():gridHtml();
+}
+function gridHtml(){
+  var list=rows.filter(function(x){
+    var h=(x.title+" "+x.details+" "+x.place+" "+x.price).toLowerCase();
+    return x.category===cat&&(!query||h.indexOf(query)>-1)&&(!hideSold||x.status!=="sold")});
+  if(sort==="low")list.sort(function(a,b){return pnum(a.price)-pnum(b.price)});
+  if(sort==="high")list.sort(function(a,b){return pnum(b.price)-pnum(a.price)});
+  if(!list.length)return '<div class="empty">Nothing in '+esc(cat)+' yet. Be the first to post.</div>';
+  return list.map(function(x){
+    var on=!!saved[x.id],own=x.user_id===uid,sold=x.status==="sold",u=safeUrl(x.photo_url);
+    return '<article class="card'+(sold?' sold':'')+'">'+(u?'<img class="thumb" loading="lazy" src="'+esc(u)+'" alt="">':'<div class="thumb ph">No photo</div>')+
+    '<h3>'+esc(x.title)+(sold?'<span class="tag s">Sold</span>':'')+'</h3>'+
+    (x.price?'<span class="price">'+esc(x.price)+'</span>':'')+(x.condition?'<span class="meta">Condition: '+esc(x.condition)+'</span>':'')+
+    '<div class="meta">'+esc(x.place)+' · '+(own?'Your listing':'By '+esc(x.author_name||"a student"))+' · '+ago(x.created_at)+'</div>'+
+    '<div class="acts"><button class="pri" type="button" data-view="'+esc(x.id)+'">'+(own?'Open':(sold?'View':'Buy / ask'))+'</button><button type="button" data-save="'+esc(x.id)+'" aria-pressed="'+on+'">'+(on?'Saved':'Save')+'</button>'+
+    (own?'<button type="button" data-sold="'+esc(x.id)+'">'+(sold?'Reopen':'Mark sold')+'</button><button type="button" data-del="'+esc(x.id)+'">Delete</button>':'')+'</div></article>';
+  }).join("");
+}
+function inboxHtml(){
+  if(!msgs.length)return '<div class="empty">No messages yet. Tap “Buy / ask” on a listing to contact the seller. Buyers’ requests for your listings show up here.</div>';
+  return '<div class="msgs">'+msgs.map(function(m){
+    var mine=m.sender_id===uid,t=(m.listings&&m.listings.title)||"a listing";
+    return '<div class="m'+(mine?'':' in')+'"><div class="meta"><b>'+(mine?'You':esc(m.sender_name||"A student"))+'</b> · about “'+esc(t)+'” · '+ago(m.created_at)+'</div><div>'+esc(m.body)+'</div>'+
+    (mine?'':'<div class="rep hide" id="rep-'+esc(m.id)+'"><input placeholder="Write a reply" maxlength="500" aria-label="Reply"><button class="sm" type="button" data-sendrep="'+esc(m.id)+'">Send</button></div><button class="sm" type="button" style="margin-top:8px" data-rep="'+esc(m.id)+'">Reply</button>')+'</div>';
+  }).join("")+'</div>';
+}
+async function sendMsg(listing_id,recipient_id,body){
+  var r=await api("/messages/",{method:"POST",body:{listing_id:listing_id,recipient_id:recipient_id,body:body}});
+  if(!r.ok){note(r.error||"Couldn’t send.");return false}
+  note("Sent");loadMsgs();return true;
+}
+function openDetail(id){
+  var x=rows.find(function(r){return r.id===id});if(!x)return;
+  var own=x.user_id===uid,sold=x.status==="sold",u=safeUrl(x.photo_url);
+  var reqs=msgs.filter(function(m){return m.listing_id===id&&m.recipient_id===uid});
+  var h=(u?'<img class="thumb" src="'+esc(u)+'" alt="">':'')+'<h2 style="font-size:26px;margin:12px 0 6px">'+esc(x.title)+(sold?'<span class="tag s">Sold</span>':'')+'</h2>'+
+   (x.price?'<span class="price">'+esc(x.price)+'</span>':'')+(x.condition?' <span class="meta">Condition: '+esc(x.condition)+'</span>':'')+
+   '<p style="color:var(--muted)">'+esc(x.details||"No extra details.")+'</p><div class="meta">'+esc(x.place)+' · '+(own?'Your listing':'By '+esc(x.author_name||"a student"))+'</div>'+(x.contact?'<div class="meta"><b>Contact:</b> '+esc(x.contact)+'</div>':'');
+  if(own)h+='<p class="meta" style="margin-top:12px"><b>'+reqs.length+'</b> request'+(reqs.length===1?'':'s')+' so far. Open Inbox to reply.</p>';
+  else if(!sold)h+='<label for="d-msg" style="margin-top:14px">Message the seller</label><textarea id="d-msg" rows="3" maxlength="500">Hi, is this still available? I’d like to buy it. Where can we meet on campus?</textarea><button class="btn" style="margin-top:10px" id="d-send" type="button">Send request</button>';
+  else h+='<p class="meta" style="margin-top:12px">This item has been sold.</p>';
+  h+='<div style="margin-top:14px"><button class="btn ghost" id="d-close" type="button">Close</button></div>';
+  $("dbody").innerHTML=h;
+  $("d-close").onclick=function(){$("dlg").close()};
+  if($("d-send"))$("d-send").onclick=async function(){var b=$("d-msg").value.trim();if(!b)return;this.disabled=true;if(await sendMsg(id,x.user_id,b))$("dlg").close();else this.disabled=false};
+  $("dlg").showModal();
+}
+$("grid").addEventListener("click",async function(e){
+  var a=function(k){return e.target.getAttribute("data-"+k)};
+  if(a("view"))openDetail(a("view"));
+  if(a("save")){saved[a("save")]=!saved[a("save")];store("cl_saved_"+uid,saved);render()}
+  if(a("sold")){var x=rows.find(function(r){return r.id===a("sold")});var ns=x.status==="sold"?"active":"sold";
+    var r=await api("/listings/"+x.id+"/status/",{method:"POST",body:{status:ns}});if(!r.ok){note(r.error||"Couldn’t update.");return}x.status=ns;note(ns==="sold"?"Marked as sold":"Listing reopened");render()}
+  if(a("del")&&confirm("Delete this listing?")){var r2=await api("/listings/"+a("del")+"/",{method:"DELETE"});if(r2.ok){rows=rows.filter(function(x){return x.id!==a("del")});render()}}
+  if(a("rep")){var el=$("rep-"+a("rep"));el.classList.toggle("hide");if(!el.classList.contains("hide"))el.querySelector("input").focus()}
+  if(a("sendrep")){var m=msgs.find(function(q){return q.id===a("sendrep")});var inp=$("rep-"+m.id).querySelector("input");var b=inp.value.trim();if(b&&await sendMsg(m.listing_id,m.sender_id,b))inp.value=""}
+});
+$("q").addEventListener("input",function(e){query=e.target.value.trim().toLowerCase();render()});
+$("sort").onchange=function(e){sort=e.target.value;render()};
+$("hs").onchange=function(e){hideSold=e.target.checked;render()};
+$("toggle").onclick=function(){var p=$("post"),closed=p.classList.toggle("hide");$("toggle").setAttribute("aria-expanded",!closed);if(!closed)$("p-title").focus()};
+$("pf").addEventListener("submit",async function(e){
+  e.preventDefault();var t=$("p-title").value.trim();if(!t)return;
+  $("pub").disabled=true;$("pm").textContent="Publishing…";
+  var f=$("p-photo").files[0],fd=new FormData();
+  if(f&&(f.type.indexOf("image/")!==0||f.size>3*1024*1024)){$("pm").textContent="Choose an image under 3 MB.";$("pub").disabled=false;return}
+  fd.append("category",cat);fd.append("title",t);fd.append("price",$("p-price").value.trim());fd.append("place",$("p-place").value.trim());fd.append("details",$("p-desc").value.trim());fd.append("contact",$("p-contact").value.trim());
+  if(cat==="Marketplace")fd.append("condition",$("p-cond").value);
+  if(f)fd.append("photo",f);
+  var r=await api("/listings/",{method:"POST",body:fd});
+  $("pub").disabled=false;
+  if(!r.ok){$("pm").textContent=r.error||"Couldn’t publish. Try again.";return}
+  $("pm").textContent="";$("pf").reset();$("post").classList.add("hide");$("toggle").setAttribute("aria-expanded","false");note("Listing published");loadListings();
+});
+$("out").onclick=async function(){await api("/auth/logout/",{method:"POST",noRedirect:true});location.replace(LOGIN_PAGE)};
+document.addEventListener("visibilitychange",function(){if(!document.hidden&&uid){loadListings();loadMsgs()}});
+function start(user){
+  var n=user.name||"";
+  var first=n?n.split(" ")[0]:user.email.split("@")[0];
+  uid=user.id;uname=n||first;saved=load("cl_saved_"+uid,{});seen=load("cl_seen_"+uid,0);
+  $("hello").textContent="Hi, "+first;$("av").textContent=first.charAt(0).toUpperCase();
+  render();loadListings();loadMsgs();setInterval(loadMsgs,30000);
+}
+api("/auth/me/").then(function(r){if(r.ok&&r.user)start(r.user)});
+</script>
+</body>
+</html>
