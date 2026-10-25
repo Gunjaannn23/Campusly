@@ -55,7 +55,6 @@ pyarrow==17.0.0
 pydeck==0.9.1
 Pygments==2.18.0
 pyjokes==0.6.0
-pypiwin32==223
 python-dateutil==2.9.0.post0
 pyttsx3==2.90
 pytz==2024.1
