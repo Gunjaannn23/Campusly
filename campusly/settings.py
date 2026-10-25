@@ -89,25 +89,26 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_URL = "/login/"
 
+
 # ---- Email (verification codes) ----
-EMAIL_HOST_USER = env("EMAIL_HOST_USER")
-if EMAIL_HOST_USER:
-    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-    EMAIL_HOST = env("EMAIL_HOST", "smtp-relay.brevo.com")
-    EMAIL_PORT = int(env("EMAIL_PORT", "587"))
-    EMAIL_USE_TLS = True
-    EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
-    EMAIL_TIMEOUT = 15
-else:
-    # Testing mode: the email (with the code) is printed in the terminal
-    # EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-    EMAIL_HOST = env("EMAIL_HOST", "smtp-relay.brevo.com")
-    EMAIL_PORT = int(env("EMAIL_PORT", "587"))
-    EMAIL_USE_TLS = True
-    EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD",'')
-    EMAIL_TIMEOUT = 15
-DEFAULT_FROM_EMAIL = "Campusly <%s>" % (env("EMAIL_FROM") or "no-reply@campusly.local")
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+EMAIL_HOST = env("EMAIL_HOST", "smtp-relay.brevo.com")
+EMAIL_PORT = int(env("EMAIL_PORT", "587"))
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+EMAIL_HOST_USER = env("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", "")
+EMAIL_TIMEOUT = 15
+
+EMAIL_FROM = env("EMAIL_FROM", "")
+DEFAULT_FROM_EMAIL = (
+    f"Campusly <{EMAIL_FROM}>"
+    if EMAIL_FROM
+    else "Campusly <no-reply@example.com>"
+)
 
 # ---- Verification-code rules ----
 CODE_TTL_MINUTES = 10
